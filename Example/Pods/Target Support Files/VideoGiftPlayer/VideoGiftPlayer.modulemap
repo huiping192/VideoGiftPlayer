@@ -1,0 +1,6 @@
+framework module VideoGiftPlayer {
+  umbrella header "VideoGiftPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}

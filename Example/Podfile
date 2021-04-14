@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'VideoGiftPlayer_Example' do
+  pod 'VideoGiftPlayer', :path => '../'
+
+  target 'VideoGiftPlayer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

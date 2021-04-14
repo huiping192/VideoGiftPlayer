@@ -1,0 +1,16 @@
+PODS:
+  - VideoGiftPlayer (0.1.0)
+
+DEPENDENCIES:
+  - VideoGiftPlayer (from `../`)
+
+EXTERNAL SOURCES:
+  VideoGiftPlayer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  VideoGiftPlayer: e652171524dc57329113ad1e3f505703a398a3ef
+
+PODFILE CHECKSUM: 4483c5d1a8e6de603cd4a271d24eb128faec0b09
+
+COCOAPODS: 1.10.0
