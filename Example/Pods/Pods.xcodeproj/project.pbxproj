@@ -16,6 +16,7 @@
 		7D82096D2629FA4D00A35521 /* VideoReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82096C2629FA4D00A35521 /* VideoReader.swift */; };
 		7D8209722629FAEB00A35521 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8209712629FAEB00A35521 /* VideoProcessor.swift */; };
 		7D82097D262B2D4F00A35521 /* FrameComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82097C262B2D4F00A35521 /* FrameComposer.swift */; };
+		7D820982262B315600A35521 /* compose.metal in Sources */ = {isa = PBXBuildFile; fileRef = 7D820981262B315600A35521 /* compose.metal */; };
 		B6DE1295C24FCA6CAAEBA1B141977682 /* Pods-VideoGiftPlayer_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 889ACBD70C78E94B327546841B7A241F /* Pods-VideoGiftPlayer_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E4DFBDBA1661AE242BF091B801B512B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		EC4EA6C1C7C19EA651C5BE53B495597D /* Pods-VideoGiftPlayer_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC376D78545F0C28F4126CADF7B04C4 /* Pods-VideoGiftPlayer_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -61,6 +62,7 @@
 		7D82096C2629FA4D00A35521 /* VideoReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReader.swift; sourceTree = "<group>"; };
 		7D8209712629FAEB00A35521 /* VideoProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessor.swift; sourceTree = "<group>"; };
 		7D82097C262B2D4F00A35521 /* FrameComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameComposer.swift; sourceTree = "<group>"; };
+		7D820981262B315600A35521 /* compose.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = compose.metal; sourceTree = "<group>"; };
 		7FFCB5B98A9F4259EB269C79B8F55CE9 /* VideoGiftPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VideoGiftPlayer.debug.xcconfig; sourceTree = "<group>"; };
 		889ACBD70C78E94B327546841B7A241F /* Pods-VideoGiftPlayer_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VideoGiftPlayer_Tests-umbrella.h"; sourceTree = "<group>"; };
 		8C1FB07ECB57C7A05DA0DE9AC5CFDC06 /* Pods-VideoGiftPlayer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VideoGiftPlayer_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				7D8209712629FAEB00A35521 /* VideoProcessor.swift */,
 				45F99E67D45F6E286D2AFFA2C07A6CEC /* Pod */,
 				93895E52DC69A019547B958670894A1C /* Support Files */,
+				7D820981262B315600A35521 /* compose.metal */,
 			);
 			name = VideoGiftPlayer;
 			path = ../..;
@@ -378,6 +381,7 @@
 			files = (
 				7D8209722629FAEB00A35521 /* VideoProcessor.swift in Sources */,
 				7D82097D262B2D4F00A35521 /* FrameComposer.swift in Sources */,
+				7D820982262B315600A35521 /* compose.metal in Sources */,
 				518566A6CEE95CA7400C88304F2981FF /* VideoGiftPlayer-dummy.m in Sources */,
 				7D82096D2629FA4D00A35521 /* VideoReader.swift in Sources */,
 				7D8209652629FA3300A35521 /* VideoGiftPlayerView.swift in Sources */,

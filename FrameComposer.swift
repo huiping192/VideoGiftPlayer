@@ -26,6 +26,6 @@ class FrameComposer {
     func read() {
         guard let baseVideoFrame = baseVideoReader.read(), let alphaVideoFrame = alphaVideoReader.read() else { return }
         
-        videoProcessor.process(baseVideoFrame: baseVideoReader, alphaVideoFrame: alphaVideoFrame)
+        videoProcessor.process(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
     }
 }
