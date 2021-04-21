@@ -88,7 +88,22 @@ class VideoProcessor {
         return pipelineState
     }
     
+     
+    func texture(imageBuffer: CVImageBuffer) -> MTLTexture? {
+        guard let textureCache = textureCache else { return nil }
+        let width = CVPixelBufferGetWidth(imageBuffer)
+        let height = CVPixelBufferGetHeight(imageBuffer)
+        var imageTexture: CVMetalTexture?
+        let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, imageBuffer, nil, .bgra8Unorm, width, height, 0, &imageTexture)
+        guard let realImageTexture = imageTexture, result == kCVReturnSuccess else { return nil }
+        return CVMetalTextureGetTexture(realImageTexture)
+    }
+    
     func process(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
+        guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
+        
+        guard let baseTexture = texture(imageBuffer: baseImageBuffer), let alphaTexture = texture(imageBuffer: alphaImageBuffer) else { return }
+        
         guard let drawable = view?.currentDrawable else {return}
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {fatalError()}
 
@@ -99,8 +114,12 @@ class VideoProcessor {
         guard let renderPipeline = pipelineState else {fatalError()}
         renderEncoder.setRenderPipelineState(renderPipeline)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(indexBuffer, offset: 0, index: 1)
+        renderEncoder.setFragmentTexture(baseTexture, index: 0)
+        renderEncoder.setFragmentTexture(alphaTexture, index: 1)
+        
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
-
+        
         // エンコード完了
         renderEncoder.endEncoding()
 
