@@ -26,7 +26,6 @@ class VideoProcessor {
     
     var view: MTKView?
     private let renderPassDescriptor = MTLRenderPassDescriptor()
-
     
     let vertices: [float4] = [
         float4(-1.0, -1.0, 0, 1),

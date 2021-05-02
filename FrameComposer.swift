@@ -13,19 +13,10 @@ protocol FrameComposerDelegate {
 
 class FrameComposer {
     
-    private let baseVideoReader: VideoReader
-    private let alphaVideoReader: VideoReader
-    
     private let videoProcessor = VideoProcessor()
-    
-    init(baseVideoURL: URL, alphaVideoURL: URL) {
-        baseVideoReader = VideoReader(videoURL: baseVideoURL)
-        alphaVideoReader = VideoReader(videoURL: alphaVideoURL)
-    }
-    
-    func read() {
-        guard let baseVideoFrame = baseVideoReader.read(), let alphaVideoFrame = alphaVideoReader.read() else { return }
-        
-        videoProcessor.process(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
+
+    func compose() {
+//        videoProcessor.process(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
+
     }
 }

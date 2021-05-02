@@ -6,9 +6,21 @@
 //
 
 import Foundation
+import MetalKit
 
-public class VideoGiftPlayerView: UIView {
+public class VideoGiftPlayerView: MTKView {
     func play(baseVideo: URL, alphaVideo: URL) {
+        
+    }
+    
+}
+
+extension VideoGiftPlayerView: MTKViewDelegate {
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        
+    }
+
+    public func draw(in view: MTKView) {
         
     }
     
