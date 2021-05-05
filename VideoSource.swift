@@ -17,6 +17,8 @@ public protocol VideoSourceDelegate: class {
     // todo: frame drop delegate
 }
 
+
+// FIXME: thread safe
 public class VideoSource {
     
     private let baseVideoReader: VideoReader
@@ -69,9 +71,14 @@ public class VideoSource {
     }
         
     @objc func ouput() {
-        readNextData()
-        guard let data = list.first else { return }
-        delegate?.videoSource(self, didOutput: data)
+        autoreleasepool {
+            readNextData()
+            
+            guard !list.isEmpty else { return }
+            let data = list.removeFirst()
+            delegate?.videoSource(self, didOutput: data)
+        }
+        
     }
     
     private func readNextData() {
