@@ -11,13 +11,13 @@ import AVFoundation
 //- captureOutput:didOutputSampleBuffer:fromConnection:
 
 
-protocol VideoSourceDelegate: class {
+public protocol VideoSourceDelegate: class {
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer))
     
     // todo: frame drop delegate
 }
 
-class VideoSource {
+public class VideoSource {
     
     private let baseVideoReader: VideoReader
     private let alphaVideoReader: VideoReader
@@ -34,9 +34,9 @@ class VideoSource {
         }
     }
     
-    private weak var delegate: VideoSourceDelegate?
+    public weak var delegate: VideoSourceDelegate?
     
-    init(baseVideoURL: URL, alphaVideoURL: URL) {
+    public init(baseVideoURL: URL, alphaVideoURL: URL) {
         baseVideoReader = VideoReader(videoURL: baseVideoURL)
         alphaVideoReader = VideoReader(videoURL: alphaVideoURL)
         
