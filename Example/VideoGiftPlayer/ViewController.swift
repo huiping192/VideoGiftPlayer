@@ -17,18 +17,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    
+        let baseFileName = "base"
+        let alphaFileName = "mask"
         
-        guard let baseUrlString = Bundle.main.path(forResource: "base", ofType: "mp4"),
-              let alphaUrlString = Bundle.main.path(forResource: "mask", ofType: "mp4") else {
-            return
-        }
+        copyFileIfNeeded(fileName: baseFileName)
+        copyFileIfNeeded(fileName: alphaFileName)
         
-        let baseUrl = URL(string: baseUrlString)!
-        let alphaUrl = URL(string: alphaUrlString)!
-
+        let baseUrl = filePath(fileName: baseFileName)
+        let alphaUrl = filePath(fileName: alphaFileName)
+        
         videoSource = VideoSource(baseVideoURL: baseUrl, alphaVideoURL: alphaUrl)
         videoSource.delegate = self
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +46,6 @@ class ViewController: UIViewController {
 
 extension ViewController: VideoSourceDelegate {
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
-        let a = 0
     }
 
 }

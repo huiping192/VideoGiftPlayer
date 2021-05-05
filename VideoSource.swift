@@ -49,12 +49,13 @@ public class VideoSource {
     }
     
     func setupDisplayLink() {
-        let displayLink = UIScreen.main.displayLink(withTarget: self, selector: #selector(VideoSource.ouput))
+        let displayLink = UIScreen.main.displayLink(withTarget: self, selector: #selector(ouput))
         displayLink?.isPaused = pause
         if #available(iOS 10.0, *) { //fixme: 動画framerateにする
             displayLink?.preferredFramesPerSecond = 30
         }
-        
+        displayLink?.add(to: .current,
+                           forMode: .defaultRunLoopMode)
         self.displayLink = displayLink
     }
     
