@@ -6,17 +6,21 @@
 //
 
 import Foundation
+import AVFoundation
 
-protocol FrameComposerDelegate {
-    
-}
-
+// FIXME: いい名前に変える
 class FrameComposer {
     
-    private let videoProcessor = VideoProcessor()
+    private let renderer = VideoRenderer()
+    private let source: VideoSource
+    
+    init(baseVideoURL: URL, alphaVideoURL: URL) {
+        source = VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+    }
+}
 
-    func compose() {
-//        videoProcessor.process(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
-
+extension FrameComposer: VideoSourceDelegate {
+    func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
+        renderer.render(baseVideoFrame: sampleBuffer.0, alphaVideoFrame: sampleBuffer.1)
     }
 }

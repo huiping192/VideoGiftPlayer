@@ -8,9 +8,6 @@
 import Foundation
 import AVFoundation
 
-//- captureOutput:didOutputSampleBuffer:fromConnection:
-
-
 public protocol VideoSourceDelegate: class {
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer))
     
@@ -70,6 +67,7 @@ public class VideoSource {
         pause = true
     }
         
+    // FIXME: 読み込みとoutputよしなにに設計する
     @objc func ouput() {
         autoreleasepool {
             readNextData()

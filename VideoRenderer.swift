@@ -12,7 +12,7 @@ import MetalKit
 /**
  metal 使って2つの動画frameを合成する
  */
-class VideoProcessor {
+class VideoRenderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private var textureCache: CVMetalTextureCache?
@@ -24,7 +24,7 @@ class VideoProcessor {
     var vertexBuffer: MTLBuffer?
     var indexBuffer: MTLBuffer?
     
-    var view: MTKView?
+    var layer: CAMetalLayer?
     private let renderPassDescriptor = MTLRenderPassDescriptor()
     
     let vertices: [float4] = [
@@ -98,12 +98,12 @@ class VideoProcessor {
         return CVMetalTextureGetTexture(realImageTexture)
     }
     
-    func process(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
+    func render(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
         guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
         
         guard let baseTexture = texture(imageBuffer: baseImageBuffer), let alphaTexture = texture(imageBuffer: alphaImageBuffer) else { return }
         
-        guard let drawable = view?.currentDrawable else {return}
+        guard let drawable = layer?.nextDrawable() else {return}
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {fatalError()}
 
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
