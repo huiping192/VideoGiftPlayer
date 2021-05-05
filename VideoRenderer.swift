@@ -9,6 +9,12 @@ import Foundation
 import AVFoundation
 import MetalKit
 
+
+protocol MetalLayer {
+    
+    func nextDrawable() -> CAMetalDrawable
+}
+
 /**
  metal 使って2つの動画frameを合成する
  */
@@ -24,7 +30,7 @@ class VideoRenderer {
     var vertexBuffer: MTLBuffer?
     var indexBuffer: MTLBuffer?
     
-    var layer: CAMetalLayer?
+    var layer: MetalLayer?
     private let renderPassDescriptor = MTLRenderPassDescriptor()
     
     let vertices: [float4] = [
