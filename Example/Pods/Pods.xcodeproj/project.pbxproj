@@ -12,9 +12,9 @@
 		6C0E618D63A1A5A85A4BA9D9DCEC0365 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		6CD5C31360482B5A4B6B90E95EC57EE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		701BE0B995273C254779DED8230C8146 /* VideoGiftPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B77E6A3521BC9581EEA79DC1AF47E04E /* VideoGiftPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7D4BBB2D264307DF005D2C2F /* VideoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BBB2C264307DF005D2C2F /* VideoRenderer.swift */; };
 		7D8209652629FA3300A35521 /* VideoGiftPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8209642629FA3300A35521 /* VideoGiftPlayerView.swift */; };
 		7D82096D2629FA4D00A35521 /* VideoReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82096C2629FA4D00A35521 /* VideoReader.swift */; };
-		7D8209722629FAEB00A35521 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8209712629FAEB00A35521 /* VideoProcessor.swift */; };
 		7D82097D262B2D4F00A35521 /* FrameComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82097C262B2D4F00A35521 /* FrameComposer.swift */; };
 		7D820982262B315600A35521 /* compose.metal in Sources */ = {isa = PBXBuildFile; fileRef = 7D820981262B315600A35521 /* compose.metal */; };
 		7D8209E0263F55BA00A35521 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8209DF263F55BA00A35521 /* VideoSource.swift */; };
@@ -46,7 +46,7 @@
 		10A52E9260E72B214DB929DFDC66878E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1985F2487643F05259FB198C3A94B170 /* VideoGiftPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VideoGiftPlayer.release.xcconfig; sourceTree = "<group>"; };
 		243FBD3E8454E9FAA972D794B9528D52 /* VideoGiftPlayer-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "VideoGiftPlayer-Info.plist"; sourceTree = "<group>"; };
-		2855ED52885FFB2D0CB46D6175F530AC /* VideoGiftPlayer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = VideoGiftPlayer.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2855ED52885FFB2D0CB46D6175F530AC /* VideoGiftPlayer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = VideoGiftPlayer.podspec; sourceTree = "<group>"; tabWidth = 2; };
 		2CD43EC8D3BAB15B7606AC184C04536F /* Pods-VideoGiftPlayer_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VideoGiftPlayer_Example-dummy.m"; sourceTree = "<group>"; };
 		3991CD8277F0E0B38530F26DE4C60851 /* Pods-VideoGiftPlayer_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-VideoGiftPlayer_Example.modulemap"; sourceTree = "<group>"; };
 		3DC06A2C2654FD834E69EB1DF8770EB2 /* Pods_VideoGiftPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoGiftPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,9 +59,9 @@
 		6A31188F28E2A79EAE63F7D5084962FC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6EF6995729E273ACED3EE88EEA037B67 /* Pods_VideoGiftPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoGiftPlayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7D4BBB2C264307DF005D2C2F /* VideoRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRenderer.swift; sourceTree = "<group>"; };
 		7D8209642629FA3300A35521 /* VideoGiftPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGiftPlayerView.swift; sourceTree = "<group>"; };
 		7D82096C2629FA4D00A35521 /* VideoReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReader.swift; sourceTree = "<group>"; };
-		7D8209712629FAEB00A35521 /* VideoProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessor.swift; sourceTree = "<group>"; };
 		7D82097C262B2D4F00A35521 /* FrameComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameComposer.swift; sourceTree = "<group>"; };
 		7D820981262B315600A35521 /* compose.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = compose.metal; sourceTree = "<group>"; };
 		7D8209DF263F55BA00A35521 /* VideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSource.swift; sourceTree = "<group>"; };
@@ -113,11 +113,11 @@
 		04DCAB44481563E6E8F0110A8569206E /* VideoGiftPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				7D4BBB2C264307DF005D2C2F /* VideoRenderer.swift */,
 				7D8209DF263F55BA00A35521 /* VideoSource.swift */,
 				7D8209642629FA3300A35521 /* VideoGiftPlayerView.swift */,
 				7D82097C262B2D4F00A35521 /* FrameComposer.swift */,
 				7D82096C2629FA4D00A35521 /* VideoReader.swift */,
-				7D8209712629FAEB00A35521 /* VideoProcessor.swift */,
 				45F99E67D45F6E286D2AFFA2C07A6CEC /* Pod */,
 				93895E52DC69A019547B958670894A1C /* Support Files */,
 				7D820981262B315600A35521 /* compose.metal */,
@@ -382,8 +382,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D4BBB2D264307DF005D2C2F /* VideoRenderer.swift in Sources */,
 				7D8209E0263F55BA00A35521 /* VideoSource.swift in Sources */,
-				7D8209722629FAEB00A35521 /* VideoProcessor.swift in Sources */,
 				7D82097D262B2D4F00A35521 /* FrameComposer.swift in Sources */,
 				7D820982262B315600A35521 /* compose.metal in Sources */,
 				518566A6CEE95CA7400C88304F2981FF /* VideoGiftPlayer-dummy.m in Sources */,
