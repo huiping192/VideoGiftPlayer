@@ -5,6 +5,17 @@
 [![License](https://img.shields.io/cocoapods/l/VideoGiftPlayer.svg?style=flat)](https://cocoapods.org/pods/VideoGiftPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/VideoGiftPlayer.svg?style=flat)](https://cocoapods.org/pods/VideoGiftPlayer)
 
+
+
+## Features
+
+- [ ]   H264 base and alpha mp4 playback
+- [ ]   Sound Effect support
+- [ ]   h265 support
+- [ ]   alpha mp4 file compression support
+- [ ]   custom texture support
+
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -22,7 +33,7 @@ pod 'VideoGiftPlayer'
 
 ## Author
 
-huiping_guo, huiping.guo@dena.jp
+huiping_guo, huiping192@gmail.com
 
 ## License
 
