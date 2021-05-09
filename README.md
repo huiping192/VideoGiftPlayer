@@ -9,7 +9,7 @@
 
 ## Features
 
-- [ ]   H264 base and alpha mp4 playback
+- [x]   H264 base and alpha mp4 playback
 - [ ]   Error handling
 - [ ]   Sound Effect support
 - [ ]   h265 support
