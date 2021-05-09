@@ -13,7 +13,7 @@ struct ColorInOut {
   float2 texCoords;
 };
 
-vertex ColorInOut vertexShader(const device float4 *position [[ buffer(0) ]],
+vertex ColorInOut vertex_shader(const device float4 *position [[ buffer(0) ]],
                                const device float2 *texCoords [[ buffer(1) ]],
                                uint    vid      [[ vertex_id ]]) {
   ColorInOut out;
@@ -22,7 +22,7 @@ vertex ColorInOut vertexShader(const device float4 *position [[ buffer(0) ]],
   return out;
 }
 
-fragment half4 fragmentShader(ColorInOut in [[ stage_in ]],
+fragment half4 fragment_shader(ColorInOut in [[ stage_in ]],
                               texture2d<half> baseTexture [[ texture(0) ]],
                               texture2d<half> alphaTexture [[ texture(1) ]]) {
   constexpr sampler colorSampler;

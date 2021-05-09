@@ -9,12 +9,6 @@ import Foundation
 import AVFoundation
 import MetalKit
 
-
-protocol MetalLayer {
-    
-    func nextDrawable() -> CAMetalDrawable
-}
-
 /**
  metal 使って2つの動画frameを合成する
  */
@@ -33,19 +27,21 @@ class VideoRenderer {
     var layer: MetalLayer?
     private let renderPassDescriptor = MTLRenderPassDescriptor()
     
+    private let renderQueue = DispatchQueue(label: "com.huiping192.VideoGiftPlayer.RenderQueue")
+
     let vertices: [float4] = [
-        float4(-1.0, -1.0, 0, 1),
+        float4( -1.0, -1.0, 0, 1),
         float4(1.0, -1.0, 0, 1),
         float4(-1.0, 1.0, 0, 1),
-        float4(1.0, 1.0, 0, 1),
+        float4(1.0, 1.0, 0, 1)
     ]
     
-    let indices: [UInt16] = [
-          0, 1,
-          1, 1,
-          0, 0,
-          1, 0
-        ]
+    let indices: [float2] = [
+        float2(0, 1),
+        float2(1, 1),
+        float2(0, 0),
+        float2(1, 0)
+    ]
     
     var vertexDescriptor: MTLVertexDescriptor {
         let vertexDescriptor = MTLVertexDescriptor()
@@ -61,21 +57,23 @@ class VideoRenderer {
     }
     
     init() {
-        
         self.device =  MTLCreateSystemDefaultDevice()!
         self.commandQueue = device.makeCommandQueue()!
         
         CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache)
 
         vertexBuffer = device.makeBuffer(bytes: vertices,
-                                         length: vertices.count * MemoryLayout<float4>.stride,
+                                         length: vertices.count * MemoryLayout<float4>.size,
                                          options: [])
         indexBuffer = device.makeBuffer(bytes: indices,
-                                        length: indices.count * MemoryLayout<UInt16>.size, options: [])
+                                        length: indices.count * MemoryLayout<float2>.size, options: [])
+        
+        self.pipelineState = buildPipelineState(device: device)
     }
     
     func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
-        let library = device.makeDefaultLibrary()
+        let url = Bundle(for: VideoRenderer.self).url(forResource: "default", withExtension: "metallib")!
+        let library = try? device.makeLibrary(URL: url)
         let vertexFunction =
             library?.makeFunction(name: vertexFunctionName)
         let fragmentFunction =
@@ -98,6 +96,7 @@ class VideoRenderer {
         guard let textureCache = textureCache else { return nil }
         let width = CVPixelBufferGetWidth(imageBuffer)
         let height = CVPixelBufferGetHeight(imageBuffer)
+        
         var imageTexture: CVMetalTexture?
         let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, imageBuffer, nil, .bgra8Unorm, width, height, 0, &imageTexture)
         guard let realImageTexture = imageTexture, result == kCVReturnSuccess else { return nil }
@@ -105,33 +104,44 @@ class VideoRenderer {
     }
     
     func render(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
+        renderQueue.async {
+            self.innerRender(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
+        }
+    }
+    func innerRender(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
         guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
         
         guard let baseTexture = texture(imageBuffer: baseImageBuffer), let alphaTexture = texture(imageBuffer: alphaImageBuffer) else { return }
         
-        guard let drawable = layer?.nextDrawable() else {return}
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {fatalError()}
+        guard let drawable = layer?.drawable() else { return }
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
+
+        let renderPassDescriptor = MTLRenderPassDescriptor()
 
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
 
         guard let renderPipeline = pipelineState else {fatalError()}
         renderEncoder.setRenderPipelineState(renderPipeline)
+        
+        // Vertex
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderEncoder.setVertexBuffer(indexBuffer, offset: 0, index: 1)
+        
+        // Texture
         renderEncoder.setFragmentTexture(baseTexture, index: 0)
         renderEncoder.setFragmentTexture(alphaTexture, index: 1)
         
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         
-        // エンコード完了
+        
         renderEncoder.endEncoding()
-
+        
         commandBuffer.present(drawable)
         
         commandBuffer.commit()
-        
         commandBuffer.waitUntilCompleted()
     }
 }

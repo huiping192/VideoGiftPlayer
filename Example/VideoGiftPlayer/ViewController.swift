@@ -12,7 +12,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
     
-    var videoSource: VideoSource!
+    var playerView: VideoGiftPlayerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +24,20 @@ class ViewController: UIViewController {
         copyFileIfNeeded(fileName: baseFileName)
         copyFileIfNeeded(fileName: alphaFileName)
         
-        let baseUrl = filePath(fileName: baseFileName)
-        let alphaUrl = filePath(fileName: alphaFileName)
+        playerView = VideoGiftPlayerView()
         
-        videoSource = VideoSource(baseVideoURL: baseUrl, alphaVideoURL: alphaUrl)
-        videoSource.delegate = self
+        playerView.configure()
+        view.addSubview(playerView)
+        
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            playerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            playerView.topAnchor.constraint(equalTo: view.topAnchor),
+            playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        
+        view.backgroundColor = UIColor.white
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,13 +48,13 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        videoSource.start()
-    }
-
-}
-
-extension ViewController: VideoSourceDelegate {
-    func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
+        let baseFileName = "base"
+        let alphaFileName = "mask"
+        
+        let baseUrl = filePath(fileName: baseFileName)
+        let alphaUrl = filePath(fileName: alphaFileName)
+        
+        playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
     }
 
 }

@@ -14,8 +14,12 @@ class FrameComposer {
     private let renderer = VideoRenderer()
     private let source: VideoSource
     
-    init(baseVideoURL: URL, alphaVideoURL: URL) {
+    init(baseVideoURL: URL, alphaVideoURL: URL, layer: MetalLayer) {
         source = VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+        source.delegate = self
+        renderer.layer = layer
+        
+        source.start()
     }
 }
 

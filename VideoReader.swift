@@ -23,7 +23,7 @@ class VideoReader {
         self.asset = AVURLAsset(url: videoURL)
         
         reader = try! AVAssetReader(asset: asset)
-        output = AVAssetReaderTrackOutput(track: asset.tracks(withMediaType: AVMediaType.video)[0], outputSettings: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA])
+        output = AVAssetReaderTrackOutput(track: asset.tracks(withMediaType: AVMediaType.video)[0], outputSettings: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA, kCVPixelBufferMetalCompatibilityKey as String: true])
         if reader.canAdd(output) {
             reader.add(output)
         }
