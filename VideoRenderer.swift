@@ -116,8 +116,6 @@ class VideoRenderer {
         guard let drawable = layer?.drawable() else { return }
         guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
 
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
 
