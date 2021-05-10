@@ -30,4 +30,8 @@ extension FrameComposer: VideoSourceDelegate {
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
         renderer.render(baseVideoFrame: sampleBuffer.0, alphaVideoFrame: sampleBuffer.1)
     }
+    
+    func videoSource(didCompleted videoSource: VideoSource) {
+        renderer.clear()
+    }
 }

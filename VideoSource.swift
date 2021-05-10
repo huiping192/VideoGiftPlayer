@@ -9,7 +9,12 @@ import Foundation
 import AVFoundation
 
 internal protocol VideoSourceDelegate: class {
+    // output two videos each frames
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer))
+    
+    // output completed
+    func videoSource(didCompleted videoSource: VideoSource)
+    
     
     // todo: frame drop delegate
 }
@@ -37,13 +42,12 @@ internal final class VideoSource {
     
     internal init(baseVideoURL: URL, alphaVideoURL: URL) {
         baseVideoReader = VideoReader(videoURL: baseVideoURL)
-        baseVideoReader.delegate = self
-        
         alphaVideoReader = VideoReader(videoURL: alphaVideoURL)
+        
+        baseVideoReader.delegate = self
         alphaVideoReader.delegate = self
         
         setupDisplayLink()
-
         preloadFrames()
     }
     
@@ -94,6 +98,9 @@ internal final class VideoSource {
 
 extension VideoSource: VideoReaderDelegate {
     func videoReader(_ videoReader: VideoReader, didChange status: VideoReader.Status) {
-        
+        if status == .completed {
+            self.pause = true
+            delegate?.videoSource(didCompleted: self)
+        }
     }
 }

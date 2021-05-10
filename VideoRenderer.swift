@@ -107,6 +107,7 @@ internal final class VideoRenderer {
 
         guard let renderPipeline = pipelineState else { return }
 
+        let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
 
@@ -130,5 +131,23 @@ internal final class VideoRenderer {
         
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
+    }
+    
+    func clear() {
+        renderQueue.async {
+            guard let drawable = self.layer?.drawable() else { return }
+
+            let renderDesc = MTLRenderPassDescriptor()
+            renderDesc.colorAttachments[0].texture = drawable.texture
+            renderDesc.colorAttachments[0].clearColor = MTLClearColorMake(0,0,0,0)
+            renderDesc.colorAttachments[0].loadAction = .clear
+            let commandBuffer = self.commandQueue.makeCommandBuffer()
+            let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderDesc)
+            renderEncoder?.endEncoding()
+            commandBuffer?.present(drawable)
+
+            commandBuffer?.commit()
+            commandBuffer?.waitUntilCompleted()
+        }
     }
 }

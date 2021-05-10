@@ -20,7 +20,18 @@ public class VideoGiftPlayerView: UIView {
     }
     
     private func configure() {
-        frameComposer.configure(layer: layer as! MetalLayer)
+        let gpuLayer = self.layer as! CAMetalLayer
+        
+        let caLayer = self.layer as CALayer
+        
+        gpuLayer.isOpaque = false
+        gpuLayer.drawsAsynchronously = true
+        gpuLayer.pixelFormat = .bgra8Unorm
+        gpuLayer.framebufferOnly = false
+        gpuLayer.presentsWithTransaction = false
+        gpuLayer.contentsGravity = "resizeAspectFill"
+        
+        frameComposer.configure(layer: gpuLayer)
         backgroundColor = .clear
     }
     
