@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-public protocol VideoSourceDelegate: class {
+internal protocol VideoSourceDelegate: class {
     func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer))
     
     // todo: frame drop delegate
@@ -16,7 +16,7 @@ public protocol VideoSourceDelegate: class {
 
 
 // FIXME: thread safe
-public class VideoSource {
+internal final class VideoSource {
     
     private let baseVideoReader: VideoReader
     private let alphaVideoReader: VideoReader
@@ -25,50 +25,51 @@ public class VideoSource {
     
     private var list: [(CMSampleBuffer,CMSampleBuffer)] = []
     
-    private var displayLink: CADisplayLink!
+    private var displayLink: CADisplayLink?
     
     private var pause = true {
         didSet {
-            displayLink.isPaused = pause
+            displayLink?.isPaused = pause
         }
     }
     
-    public weak var delegate: VideoSourceDelegate?
+    internal weak var delegate: VideoSourceDelegate?
     
-    public init(baseVideoURL: URL, alphaVideoURL: URL) {
+    internal init(baseVideoURL: URL, alphaVideoURL: URL) {
         baseVideoReader = VideoReader(videoURL: baseVideoURL)
         alphaVideoReader = VideoReader(videoURL: alphaVideoURL)
         
+        setupDisplayLink()
+
+        preloadFrames()
+    }
+    
+    private func preloadFrames() {
         // 事前に3frame読み込みする
         (0..<3).forEach({ _ in
             self.readNextData()
         })
-        
-        setupDisplayLink()
     }
     
-    func setupDisplayLink() {
+    private func setupDisplayLink() {
         let displayLink = UIScreen.main.displayLink(withTarget: self, selector: #selector(ouput))
         displayLink?.isPaused = pause
-        if #available(iOS 10.0, *) { //fixme: 動画framerateにする
-            displayLink?.preferredFramesPerSecond = 30
-        }
-        displayLink?.add(to: .current,
-                           forMode: .defaultRunLoopMode)
+        //fixme: 動画framerateにする
+        displayLink?.preferredFramesPerSecond = 30
+        
+        displayLink?.add(to: .current, forMode: .defaultRunLoopMode)
         self.displayLink = displayLink
     }
     
-    
-    public func start() {
+    internal func start() {
         pause = false
     }
     
-    public func stop() {
+    internal func stop() {
         pause = true
     }
         
-    // FIXME: 読み込みとoutputよしなにに設計する
-    @objc func ouput() {
+    @objc private func ouput() {
         autoreleasepool {
             readNextData()
             

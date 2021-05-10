@@ -10,16 +10,19 @@ import AVFoundation
 
 // FIXME: いい名前に変える
 class FrameComposer {
-    
     private let renderer = VideoRenderer()
-    private let source: VideoSource
+    private var source: VideoSource?
     
-    init(baseVideoURL: URL, alphaVideoURL: URL, layer: MetalLayer) {
-        source = VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
-        source.delegate = self
+    func configure(layer: MetalLayer) {
         renderer.layer = layer
-        
+    }
+    
+    func play(baseVideoURL: URL, alphaVideoURL: URL) {
+        let source = VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+        source.delegate = self
         source.start()
+        
+        self.source = source
     }
 }
 

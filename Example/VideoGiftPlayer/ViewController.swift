@@ -26,7 +26,6 @@ class ViewController: UIViewController {
         
         playerView = VideoGiftPlayerView()
         
-        playerView.configure()
         view.addSubview(playerView)
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
