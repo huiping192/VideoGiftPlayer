@@ -20,6 +20,46 @@
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+## Usage
+
+
+Configure VideoGiftPlayerView.
+
+```swift
+
+import VideoGiftPlayer
+
+class ViewController: UIViewController {
+    
+    var playerView: VideoGiftPlayerView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        playerView = VideoGiftPlayerView()
+        
+        view.addSubview(playerView)
+        
+        // autolayout
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            playerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            playerView.topAnchor.constraint(equalTo: view.topAnchor),
+            playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+}
+```
+
+Play video effect.
+
+```swift
+// local video file only
+let baseUrl = Bundle.main.url(forResource: "base", withExtension: "mp4")!
+let alphaUrl = Bundle.main.url(forResource: "mask", withExtension: "mp4")!
+playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
+```
 
 ## Requirements
 
