@@ -27,6 +27,8 @@ internal final class VideoReader {
         }
     }
     
+    let nominalFrameRate: Float
+    
     weak var delegate: VideoReaderDelegate?
     
     enum Status: String {
@@ -45,10 +47,14 @@ internal final class VideoReader {
         
         let attrs = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
                      kCVPixelBufferMetalCompatibilityKey as String: true] as [String : Any]
-        output = AVAssetReaderTrackOutput(track: asset.tracks(withMediaType: AVMediaType.video)[0], outputSettings: attrs)
+        
+        let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first!
+        output = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: attrs)
         if reader.canAdd(output) {
             reader.add(output)
         }
+        
+        nominalFrameRate = videoTrack.nominalFrameRate
         
         // offでパフォーマンス改善
         output.alwaysCopiesSampleData = false

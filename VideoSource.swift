@@ -61,8 +61,9 @@ internal final class VideoSource {
     private func setupDisplayLink() {
         let displayLink = UIScreen.main.displayLink(withTarget: self, selector: #selector(ouput))
         displayLink?.isPaused = pause
-        //fixme: 動画framerateにする
-        displayLink?.preferredFramesPerSecond = 30
+        
+        //動画framerateにする
+        displayLink?.preferredFramesPerSecond = Int(baseVideoReader.nominalFrameRate)
         
         displayLink?.add(to: .current, forMode: .defaultRunLoopMode)
         self.displayLink = displayLink
