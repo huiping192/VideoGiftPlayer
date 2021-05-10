@@ -37,7 +37,10 @@ internal final class VideoSource {
     
     internal init(baseVideoURL: URL, alphaVideoURL: URL) {
         baseVideoReader = VideoReader(videoURL: baseVideoURL)
+        baseVideoReader.delegate = self
+        
         alphaVideoReader = VideoReader(videoURL: alphaVideoURL)
+        alphaVideoReader.delegate = self
         
         setupDisplayLink()
 
@@ -85,5 +88,12 @@ internal final class VideoSource {
             guard let baseVideoFrame = self.baseVideoReader.read(), let alphaVideoFrame = self.alphaVideoReader.read() else { return }
             self.list.append((baseVideoFrame,alphaVideoFrame))
         }
+    }
+}
+
+
+extension VideoSource: VideoReaderDelegate {
+    func videoReader(_ videoReader: VideoReader, didChange status: VideoReader.Status) {
+        
     }
 }

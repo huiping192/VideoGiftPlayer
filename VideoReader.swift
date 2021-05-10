@@ -8,15 +8,34 @@
 import Foundation
 import AVFoundation
 
+protocol VideoReaderDelegate: class {
+    func videoReader(_ videoReader: VideoReader, didChange status: VideoReader.Status)
+}
 /**
  動画reader
  */
-class VideoReader {
+internal final class VideoReader {
     private let videoURL: URL
     
     private let asset: AVURLAsset
     private var reader: AVAssetReader
     private var output: AVAssetReaderTrackOutput
+    
+    private(set) var status: Status = .unknown {
+        didSet {
+            delegate?.videoReader(self, didChange: status)
+        }
+    }
+    
+    weak var delegate: VideoReaderDelegate?
+    
+    enum Status: String {
+        case unknown
+        case reading
+        case completed
+        case failed
+        case cancelled
+    }
     
     init(videoURL: URL) {
         self.videoURL = videoURL
@@ -35,10 +54,28 @@ class VideoReader {
         output.alwaysCopiesSampleData = false
         
         reader.startReading()
+        status = .reading
     }
     
     func read() -> CMSampleBuffer? {
-        return output.copyNextSampleBuffer()
+        let buffer = output.copyNextSampleBuffer()
+        updateStatus()
+        return buffer
+    }
+    
+    private func updateStatus() {
+        switch reader.status {
+        case .unknown:
+            status = .unknown
+        case .cancelled:
+            status = .cancelled
+        case .completed:
+            status = .completed
+        case .failed:
+            status = .failed
+        case .reading:
+            status = .reading
+        }
     }
     
 }
