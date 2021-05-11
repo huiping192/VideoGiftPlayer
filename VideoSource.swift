@@ -26,8 +26,10 @@ internal final class VideoSource {
     private let baseVideoReader: VideoReader
     private let alphaVideoReader: VideoReader
     
-    private let queue = DispatchQueue(label: "com.huiping192.VideoGiftPlayer.VideoSourceQueue")
+    private let readerQueue = DispatchQueue(label: "com.huiping192.VideoGiftPlayer.VideoSource.ReaderQueue")
     
+    private let dataQueue = DispatchQueue(label: "com.huiping192.VideoGiftPlayer.VideoSource.DataQueue")
+
     private var list: [(CMSampleBuffer,CMSampleBuffer)] = []
     
     private var displayLink: CADisplayLink?
@@ -81,17 +83,21 @@ internal final class VideoSource {
         autoreleasepool {
             readNextData()
             
-            guard !list.isEmpty else { return }
-            let data = list.removeFirst()
-            delegate?.videoSource(self, didOutput: data)
+            dataQueue.async {
+                guard !self.list.isEmpty else { return }
+                let data = self.list.removeFirst()
+                self.delegate?.videoSource(self, didOutput: data)
+            }
         }
         
     }
     
     private func readNextData() {
-        queue.async {
+        readerQueue.async {
             guard let baseVideoFrame = self.baseVideoReader.read(), let alphaVideoFrame = self.alphaVideoReader.read() else { return }
-            self.list.append((baseVideoFrame,alphaVideoFrame))
+            self.dataQueue.async {
+                self.list.append((baseVideoFrame,alphaVideoFrame))
+            }
         }
     }
 }
