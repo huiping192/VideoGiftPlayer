@@ -10,6 +10,8 @@
 ## Features
 
 - [x]   H264 base and alpha mp4 playback
+- [x]   metal support
+- [ ]   opengl support
 - [ ]   Error handling
 - [ ]   Sound Effect support
 - [ ]   h265 support
