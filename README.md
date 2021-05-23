@@ -1,11 +1,11 @@
 # VideoGiftPlayer
 
-[![CI Status](https://img.shields.io/travis/huiping_guo/VideoGiftPlayer.svg?style=flat)](https://travis-ci.org/huiping_guo/VideoGiftPlayer)
+[![CI Status](https://img.shields.io/travis/huiping192/VideoGiftPlayer.svg?style=flat)](https://travis-ci.org/huiping192/VideoGiftPlayer)
 [![Version](https://img.shields.io/cocoapods/v/VideoGiftPlayer.svg?style=flat)](https://cocoapods.org/pods/VideoGiftPlayer)
 [![License](https://img.shields.io/cocoapods/l/VideoGiftPlayer.svg?style=flat)](https://cocoapods.org/pods/VideoGiftPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/VideoGiftPlayer.svg?style=flat)](https://cocoapods.org/pods/VideoGiftPlayer)
 
-
+VideoGiftPlayer is simple aplha mp4 player.  Inspire by [Kitsunebi](https://github.com/noppefoxwolf/Kitsunebi).
 
 ## Features
 
