@@ -67,7 +67,7 @@ internal final class VideoSource {
         //動画framerateにする
         displayLink?.preferredFramesPerSecond = Int(baseVideoReader.nominalFrameRate)
         
-        displayLink?.add(to: .current, forMode: .defaultRunLoopMode)
+        displayLink?.add(to: .current, forMode: .default)
         self.displayLink = displayLink
     }
     

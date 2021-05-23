@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-Aplha video animation player.
+Aplha video animation player. Inspire by Kitsunebi.
                        DESC
 
   s.homepage         = 'https://github.com/huiping192/VideoGiftPlayer'
@@ -38,5 +38,5 @@ Aplha video animation player.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'AVFoundation', 'MetalKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.swift_versions = '5.2'
 end
