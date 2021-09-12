@@ -17,15 +17,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-    
-        let baseFileName = "base"
-        let alphaFileName = "mask"
-        
-        copyFileIfNeeded(fileName: baseFileName)
-        copyFileIfNeeded(fileName: alphaFileName)
-        
         playerView = VideoGiftPlayerView()
-        
         view.addSubview(playerView)
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +28,7 @@ class ViewController: UIViewController {
             playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.yellow
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,14 +38,11 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let baseFileName = "base"
-        let alphaFileName = "mask"
-        
-        let baseUrl = filePath(fileName: baseFileName)
-        let alphaUrl = filePath(fileName: alphaFileName)
-        
-        playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
+                
+      let baseUrl = Bundle.main.url(forResource: "base", withExtension: "mp4")!
+      let alphaUrl = Bundle.main.url(forResource: "mask", withExtension: "mp4")!
+      
+      playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
     }
 
 }

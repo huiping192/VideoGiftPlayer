@@ -45,7 +45,7 @@ internal final class VideoReader {
         
         reader = try! AVAssetReader(asset: asset)
         
-        let attrs = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
+        let attrs = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange,
                      kCVPixelBufferMetalCompatibilityKey as String: true] as [String : Any]
         
         let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first!

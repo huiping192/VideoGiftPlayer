@@ -15,12 +15,12 @@ extension CVMetalTextureCache {
         return textureCache
     }
     
-    func texture(imageBuffer: CVImageBuffer, pixelFormat: MTLPixelFormat) -> MTLTexture?  {
-        let width = CVPixelBufferGetWidth(imageBuffer)
-        let height = CVPixelBufferGetHeight(imageBuffer)
+  func texture(imageBuffer: CVImageBuffer, pixelFormat: MTLPixelFormat, planeIndex: Int = 0) -> MTLTexture?  {
+        let width = CVPixelBufferGetWidthOfPlane(imageBuffer, planeIndex)
+        let height = CVPixelBufferGetHeightOfPlane(imageBuffer, planeIndex)
         
         var imageTexture: CVMetalTexture?
-        let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, self, imageBuffer, nil, pixelFormat, width, height, 0, &imageTexture)
+        let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, self, imageBuffer, nil, pixelFormat, width, height, planeIndex, &imageTexture)
         guard let realImageTexture = imageTexture, result == kCVReturnSuccess else { return nil }
         return CVMetalTextureGetTexture(realImageTexture)
     }

@@ -17,7 +17,6 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7D37908B2642A48C00D47426 /* base.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D3790892642A48B00D47426 /* base.mp4 */; };
 		7D37908C2642A48C00D47426 /* mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D37908A2642A48C00D47426 /* mask.mp4 */; };
-		7D3790902642E59E00D47426 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D37908F2642E59E00D47426 /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		7CD583040BC5EB53A37C0C62 /* Pods_VideoGiftPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoGiftPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D3790892642A48B00D47426 /* base.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = base.mp4; path = video/base.mp4; sourceTree = "<group>"; };
 		7D37908A2642A48C00D47426 /* mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = mask.mp4; path = video/mask.mp4; sourceTree = "<group>"; };
-		7D37908F2642E59E00D47426 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		9C39A91ECBB3145C3DC112A1 /* Pods-VideoGiftPlayer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoGiftPlayer_Example.release.xcconfig"; path = "Target Support Files/Pods-VideoGiftPlayer_Example/Pods-VideoGiftPlayer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		A8B1641EF121F88F8BB92042 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E68923B56A95CECB0780FCEB /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				7D37908F2642E59E00D47426 /* Util.swift */,
 			);
 			name = "Example for VideoGiftPlayer";
 			path = VideoGiftPlayer;
@@ -351,7 +348,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				7D3790902642E59E00D47426 /* Util.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

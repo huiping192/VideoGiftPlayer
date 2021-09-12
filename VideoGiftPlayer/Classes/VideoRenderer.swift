@@ -100,7 +100,9 @@ internal final class VideoRenderer {
     private func innerRender(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
         guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
 
-        guard let baseTexture = textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .bgra8Unorm), let alphaTexture = textureCache?.texture(imageBuffer: alphaImageBuffer, pixelFormat: .bgra8Unorm) else { return }
+        guard let yTexture = textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0),
+              let uvTexture = textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .rg8Unorm, planeIndex: 1),
+              let alphaTexture = textureCache?.texture(imageBuffer: alphaImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0) else { return }
         
         guard let drawable = layer?.drawable() else { return }
         guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
@@ -120,8 +122,9 @@ internal final class VideoRenderer {
         renderEncoder.setVertexBuffer(indexBuffer, offset: 0, index: 1)
         
         // Texture
-        renderEncoder.setFragmentTexture(baseTexture, index: 0)
-        renderEncoder.setFragmentTexture(alphaTexture, index: 1)
+        renderEncoder.setFragmentTexture(yTexture, index: 0)
+        renderEncoder.setFragmentTexture(uvTexture, index: 1)
+        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
         
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         
