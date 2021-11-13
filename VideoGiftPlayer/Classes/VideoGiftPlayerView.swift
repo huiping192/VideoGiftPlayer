@@ -7,34 +7,44 @@
 
 import Foundation
 import MetalKit
+import AVFoundation
 
 public class VideoGiftPlayerView: UIView {
-    override public class var layerClass: AnyClass {
-        return CAMetalLayer.self
+  override public class var layerClass: AnyClass {
+    return CAMetalLayer.self
+  }
+  
+  private var frameComposer: FrameComposer?
+  
+  private var configued: Bool = false
+  
+  public func play(baseVideo: URL, alphaVideo: URL) throws {
+    
+    if !configued {
+      configued = true
+      try configure()
     }
     
-    private let frameComposer = FrameComposer()
+    try frameComposer?.play(baseVideoURL: baseVideo, alphaVideoURL: alphaVideo)
+  }
+  
+  private func configure() throws {
+    frameComposer = try FrameComposer()
     
-    public func play(baseVideo: URL, alphaVideo: URL) {
-        frameComposer.play(baseVideoURL: baseVideo, alphaVideoURL: alphaVideo)
-    }
+    let gpuLayer = self.layer as! CAMetalLayer
+    frameComposer?.configure(layer: gpuLayer)
+  }
+  
+  public override init(frame: CGRect) {
+    super.init(frame: frame)
     
-    private func configure() {
-        let gpuLayer = self.layer as! CAMetalLayer
-        frameComposer.configure(layer: gpuLayer)
-        backgroundColor = .clear
-    }
+    backgroundColor = .clear
+  }
+  
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        configure()
-    }
-    
+    backgroundColor = .clear
+  }
+  
 }
