@@ -10,28 +10,32 @@ import AVFoundation
 
 // FIXME: いい名前に変える
 class FrameComposer {
-    private let renderer = VideoRenderer()
-    private var source: VideoSource?
+  private let renderer: VideoRenderer
+  private var source: VideoSource?
+  
+  init() throws {
+    renderer = try VideoRenderer()
+  }
+  
+  func configure(layer: MetalLayer) {
+    renderer.layer = layer
+  }
+  
+  func play(baseVideoURL: URL, alphaVideoURL: URL) throws {
+    let source = try VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+    source.delegate = self
+    source.start()
     
-    func configure(layer: MetalLayer) {
-        renderer.layer = layer
-    }
-    
-    func play(baseVideoURL: URL, alphaVideoURL: URL) {
-        let source = VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
-        source.delegate = self
-        source.start()
-        
-        self.source = source
-    }
+    self.source = source
+  }
 }
 
 extension FrameComposer: VideoSourceDelegate {
-    func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
-        renderer.render(baseVideoFrame: sampleBuffer.0, alphaVideoFrame: sampleBuffer.1)
-    }
-    
-    func videoSource(didCompleted videoSource: VideoSource) {
-        renderer.clear()
-    }
+  func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
+    renderer.render(baseVideoFrame: sampleBuffer.0, alphaVideoFrame: sampleBuffer.1)
+  }
+  
+  func videoSource(didCompleted videoSource: VideoSource) {
+    renderer.clear()
+  }
 }
