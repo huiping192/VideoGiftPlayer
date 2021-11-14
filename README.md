@@ -14,7 +14,7 @@ VideoGiftPlayer is simple aplha mp4 player.  Inspire by [Kitsunebi](https://gith
 - [ ]   opengl support
 - [x]   Error handling
 - [x]   Sound Effect support
-- [ ]   hevc/h265 support
+- [ ]   hevc with alpha video support
 - [ ]   alpha mp4 file compression support
 - [ ]   custom texture support
 
