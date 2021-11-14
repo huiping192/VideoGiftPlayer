@@ -15,7 +15,7 @@ protocol VideoReaderDelegate: AnyObject {
  動画reader
  */
 internal final class VideoReader {
-  private let videoURL: URL
+  let videoURL: URL
   
   private let asset: AVURLAsset
   private var reader: AVAssetReader
@@ -28,6 +28,8 @@ internal final class VideoReader {
   }
   
   let nominalFrameRate: Float
+  
+  let hasAudio: Bool
   
   weak var delegate: VideoReaderDelegate?
   
@@ -60,6 +62,9 @@ internal final class VideoReader {
     
     // offでパフォーマンス改善
     output.alwaysCopiesSampleData = false
+    
+    
+    hasAudio = !asset.tracks(withMediaType: .audio).isEmpty
     
     reader.startReading()
     status = .reading
