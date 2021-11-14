@@ -34,9 +34,16 @@ internal final class VideoSource {
   
   private var displayLink: CADisplayLink?
   
+  private var audioPlayer: AVAudioPlayer?
+  
   private var pause = true {
     didSet {
       displayLink?.isPaused = pause
+      if pause {
+        audioPlayer?.pause()
+      } else {
+        audioPlayer?.play()
+      }
     }
   }
   
@@ -50,6 +57,8 @@ internal final class VideoSource {
     alphaVideoReader.delegate = self
     
     setupDisplayLink()
+    setupAudioPlayerIfNeeded()
+
     preloadFrames()
   }
   
@@ -69,6 +78,18 @@ internal final class VideoSource {
     
     displayLink?.add(to: .current, forMode: .default)
     self.displayLink = displayLink
+  }
+  
+  private func setupAudioPlayerIfNeeded() {
+    if baseVideoReader.hasAudio {
+      audioPlayer = try? AVAudioPlayer(contentsOf: baseVideoReader.videoURL)
+      return
+    }
+    
+    if alphaVideoReader.hasAudio {
+      audioPlayer = try? AVAudioPlayer(contentsOf: alphaVideoReader.videoURL)
+      return
+    }
   }
   
   internal func start() {
