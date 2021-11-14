@@ -22,7 +22,15 @@ class FrameComposer {
   }
   
   func play(baseVideoURL: URL, alphaVideoURL: URL) throws {
-    let source = try VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+    let source = try MP4VideoSource(baseVideoURL: baseVideoURL, alphaVideoURL: alphaVideoURL)
+    source.delegate = self
+    source.start()
+    
+    self.source = source
+  }
+  
+  func play(hevcURL: URL) throws {
+    let source = try HEVCVideoSource(hevcURL: hevcURL)
     source.delegate = self
     source.start()
     
@@ -31,7 +39,11 @@ class FrameComposer {
 }
 
 extension FrameComposer: VideoSourceDelegate {
-  func videoSource(_ videoSource: VideoSource, didOutput sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
+  func videoSource(_ videoSource: VideoSource, didHEVCOutput sampleBuffer: CMSampleBuffer) {
+    renderer.renderHEVC(hevcFrame: sampleBuffer)
+  }
+  
+  func videoSource(_ videoSource: VideoSource, didMP4Output sampleBuffer: (CMSampleBuffer,CMSampleBuffer)) {
     renderer.render(baseVideoFrame: sampleBuffer.0, alphaVideoFrame: sampleBuffer.1)
   }
   

@@ -47,8 +47,7 @@ internal final class VideoReader {
     
     reader = try AVAssetReader(asset: asset)
     
-    let attrs = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange,
-                 kCVPixelBufferMetalCompatibilityKey as String: true] as [String : Any]
+    let attrs = [kCVPixelBufferMetalCompatibilityKey as String: true] as [String : Any]
     
     guard let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first else {
       throw NSError(domain: "com.huiping192.VideoGiftPlayer.VideoReader", code: -1, userInfo: nil)

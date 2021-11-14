@@ -19,13 +19,21 @@ public class VideoGiftPlayerView: UIView {
   private var configued: Bool = false
   
   public func play(baseVideo: URL, alphaVideo: URL) throws {
-    
     if !configued {
       configued = true
       try configure()
     }
     
     try frameComposer?.play(baseVideoURL: baseVideo, alphaVideoURL: alphaVideo)
+  }
+  
+  public func play(hevcVideo: URL) throws {
+    if !configued {
+      configued = true
+      try configure()
+    }
+    
+    try frameComposer?.play(hevcURL: hevcVideo)
   }
   
   private func configure() throws {

@@ -39,10 +39,22 @@ class ViewController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
+//    playMP4()
+    
+    playHEVC()
+  }
+  
+  private func playMP4() {
     let baseUrl = Bundle.main.url(forResource: "base", withExtension: "mp4")!
     let alphaUrl = Bundle.main.url(forResource: "mask", withExtension: "mp4")!
     
     try? playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
+  }
+  
+  private func playHEVC() {
+    let hevcURL = Bundle.main.url(forResource: "hevc", withExtension: "mov")!
+    
+    try? playerView.play(hevcVideo: hevcURL)
   }
   
 }
