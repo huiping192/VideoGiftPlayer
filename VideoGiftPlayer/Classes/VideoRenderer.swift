@@ -86,17 +86,29 @@ internal final class VideoRenderer {
   
   func render(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
     renderQueue.async {
-      self.innerRender(baseVideoFrame: baseVideoFrame, alphaVideoFrame: alphaVideoFrame)
+      guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
+      
+      guard let yTexture = self.textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0),
+            let uvTexture = self.textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .rg8Unorm, planeIndex: 1),
+            let alphaTexture = self.textureCache?.texture(imageBuffer: alphaImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0) else { return }
+      
+      self.innerRender(yTexture: yTexture, uvTexture: uvTexture, alphaTexture: alphaTexture)
     }
   }
   
-  private func innerRender(baseVideoFrame: CMSampleBuffer, alphaVideoFrame: CMSampleBuffer) {
-    guard let baseImageBuffer = CMSampleBufferGetImageBuffer(baseVideoFrame), let alphaImageBuffer = CMSampleBufferGetImageBuffer(alphaVideoFrame) else { return }
-    
-    guard let yTexture = textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0),
-          let uvTexture = textureCache?.texture(imageBuffer: baseImageBuffer, pixelFormat: .rg8Unorm, planeIndex: 1),
-          let alphaTexture = textureCache?.texture(imageBuffer: alphaImageBuffer, pixelFormat: .r8Unorm, planeIndex: 0) else { return }
-    
+  func renderHEVC(hevcFrame: CMSampleBuffer) {
+    renderQueue.async {
+      guard let imageBuffer = CMSampleBufferGetImageBuffer(hevcFrame) else { return }
+      
+      guard let yTexture = self.textureCache?.texture(imageBuffer: imageBuffer, pixelFormat: .r8Unorm, planeIndex: 0),
+            let uvTexture = self.textureCache?.texture(imageBuffer: imageBuffer, pixelFormat: .rg8Unorm, planeIndex: 1),
+            let alphaTexture = self.textureCache?.texture(imageBuffer: imageBuffer, pixelFormat: .r8Unorm, planeIndex: 2) else { return }
+      
+      self.innerRender(yTexture: yTexture, uvTexture: uvTexture, alphaTexture: alphaTexture)
+    }
+  }
+  
+  private func innerRender(yTexture: MTLTexture, uvTexture: MTLTexture, alphaTexture: MTLTexture) {
     guard let drawable = layer?.drawable() else { return }
     guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
     
