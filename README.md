@@ -56,11 +56,21 @@ class ViewController: UIViewController {
 
 Play video effect.
 
+
+base,alpha mp4
 ```swift
 // local video file only
 let baseUrl = Bundle.main.url(forResource: "base", withExtension: "mp4")!
 let alphaUrl = Bundle.main.url(forResource: "mask", withExtension: "mp4")!
 playerView.play(baseVideo: baseUrl, alphaVideo: alphaUrl)
+```
+
+hevc with alpha
+
+```swift
+// local video file only
+let hevcUrl = Bundle.main.url(forResource: "hevc", withExtension: "mov")!
+playerView.play(hevcVideo: hevcUrl)
 ```
 
 ## Requirements
